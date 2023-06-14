@@ -75,26 +75,7 @@ public class Game implements KeyboardHandler {
         event.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(event);
 
-        // Register key-released events
-        event = new KeyboardEvent();
-        event.setKey(KeyboardEvent.KEY_W);
-        event.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
-        keyboard.addEventListener(event);
 
-        event = new KeyboardEvent();
-        event.setKey(KeyboardEvent.KEY_S);
-        event.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
-        keyboard.addEventListener(event);
-
-        event = new KeyboardEvent();
-        event.setKey(KeyboardEvent.KEY_A);
-        event.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
-        keyboard.addEventListener(event);
-
-        event = new KeyboardEvent();
-        event.setKey(KeyboardEvent.KEY_D);
-        event.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
-        keyboard.addEventListener(event);
     }
 
     @Override
