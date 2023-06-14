@@ -11,6 +11,7 @@ public class Game implements KeyboardHandler {
     private Food food;
     private SnakeGraphics graphics;
     private boolean gameOver;
+    private boolean restart;
 
     public static final int WIDTH = 50;
     public static final int HEIGHT = 30;
@@ -21,6 +22,7 @@ public class Game implements KeyboardHandler {
         food = new Food(snake);
         graphics = new SnakeGraphics(WIDTH, HEIGHT, DIMENSION);
         gameOver = false;
+        restart = false;
 
         Keyboard keyboard = new Keyboard(this);
         registerKeys(keyboard);
@@ -52,6 +54,37 @@ public class Game implements KeyboardHandler {
                 e.printStackTrace();
             }
         }
+
+        while (!restart) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Reiniciar o jogo
+        restart();
+    }
+
+    private void restart() {
+        /*snake = new Snake(DIMENSION);
+        food = new Food(snake);
+        graphics.show();
+        gameOver = false;
+        restart = false;
+        start();*/
+        graphics.clear();
+
+        snake = new Snake(DIMENSION);
+        food = new Food(snake);
+        graphics = new SnakeGraphics(WIDTH, HEIGHT, DIMENSION);
+        gameOver = false;
+        restart = false;
+
+        Keyboard keyboard = new Keyboard(this);
+        registerKeys(keyboard);
+        start();
     }
 
     private void registerKeys(Keyboard keyboard) {
@@ -75,6 +108,10 @@ public class Game implements KeyboardHandler {
         event.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(event);
 
+        event = new KeyboardEvent();
+        event.setKey(KeyboardEvent.KEY_ENTER);
+        event.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(event);
 
     }
 
@@ -82,7 +119,9 @@ public class Game implements KeyboardHandler {
     public void keyPressed(KeyboardEvent event) {
         int keyCode = event.getKey();
 
-        if (keyCode == KeyboardEvent.KEY_W && snake.getDirection() != Snake.Direction.DOWN) {
+        if (gameOver && keyCode == KeyboardEvent.KEY_ENTER) {
+            restart = true;
+        } else if (keyCode == KeyboardEvent.KEY_W && snake.getDirection() != Snake.Direction.DOWN) {
             snake.setDirection(Snake.Direction.UP);
         } else if (keyCode == KeyboardEvent.KEY_S && snake.getDirection() != Snake.Direction.UP) {
             snake.setDirection(Snake.Direction.DOWN);
