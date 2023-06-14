@@ -1,5 +1,7 @@
 package org.academiadecodigo.nanderthals;
 
+import org.academiadecodigo.simplegraphics.pictures.Picture;
+
 import java.util.LinkedList;
 
 public class Snake {
