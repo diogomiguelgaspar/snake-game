@@ -26,7 +26,12 @@ public class Food {
         do {
             x = random.nextInt(Game.WIDTH);
             y = random.nextInt(Game.HEIGHT);
-        } while (snake.getBody().contains(new SnakeCell(x, y)));
+        } while (snake.getBody().contains(new SnakeCell(x, y)) || isOutOfBounds(x, y));
         return new SnakeCell(x, y);
     }
+
+    private boolean isOutOfBounds(int x, int y) {
+        return x < 0 || x >= Game.WIDTH || y < 0 || y >= Game.HEIGHT;
+    }
+
 }
