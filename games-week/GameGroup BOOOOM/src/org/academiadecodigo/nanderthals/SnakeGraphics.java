@@ -11,7 +11,7 @@ public class SnakeGraphics {
     public SnakeGraphics(int width, int height, int dimension) {
         grid = new Picture[width][height];
         createGrid(dimension);
-        snakeHeadPicture = new Picture(0, 0, "resources/snake_head.png");
+        snakeHeadPicture = new Picture(20, 20, "resources/snake_head.png");
         snakeHeadPicture.draw();
         snakeBodyPictures = new Picture[width * height];
     }
