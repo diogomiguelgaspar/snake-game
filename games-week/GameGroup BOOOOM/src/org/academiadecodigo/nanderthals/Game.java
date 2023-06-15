@@ -15,7 +15,7 @@ public class Game implements KeyboardHandler {
 
     public static final int WIDTH = 50;
     public static final int HEIGHT = 30;
-    public static final int DIMENSION = 15;
+    public static final int DIMENSION = 20;
 
     public Game() {
         snake = new Snake(DIMENSION);
@@ -29,8 +29,6 @@ public class Game implements KeyboardHandler {
     }
 
     public void start() {
-        graphics.createWindow(WIDTH * DIMENSION, HEIGHT * DIMENSION);
-        graphics.show();
 
         while (!gameOver) {
             snake.move();

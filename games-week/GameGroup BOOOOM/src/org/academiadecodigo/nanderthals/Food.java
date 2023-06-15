@@ -31,7 +31,7 @@ public class Food {
     }
 
     private boolean isOutOfBounds(int x, int y) {
-        return x < 0 || x >= Game.WIDTH || y < 0 || y >= Game.HEIGHT;
+        return x < 1 || x >= Game.WIDTH - 1 || y < 1 || y >= Game.HEIGHT -1 ;
     }
 
 }
