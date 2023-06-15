@@ -1,5 +1,8 @@
 package org.academiadecodigo.nanderthals;
 
+import org.academiadecodigo.simplegraphics.graphics.Canvas;
+import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class SnakeGraphics {
@@ -7,17 +10,24 @@ public class SnakeGraphics {
     private Picture[][] grid;
     private Picture[] snakeBodyPictures;
 
+    private Rectangle background;
+    private Picture menuBackground;
+
     public SnakeGraphics(int width, int height, int dimension) {
+        background = new Rectangle(10, 10, 800, 600);
+        menuBackground = new Picture(10, 10, "resources/game_background.jpg");
+        show();
         grid = new Picture[width][height];
         snakeBodyPictures = new Picture[width * height];
     }
 
     public void show() {
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                grid[i][j].draw();
-            }
-        }
+        background.setColor(Color.BLACK);
+        background.fill();
+
+        menuBackground.draw();
+
+        Canvas.getInstance().repaint();
     }
 
     public void repaint(Snake snake, Food food) {

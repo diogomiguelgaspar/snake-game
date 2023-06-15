@@ -4,6 +4,13 @@ import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.File;
+import java.io.IOException;
 
 public class Game implements KeyboardHandler {
 
@@ -13,7 +20,7 @@ public class Game implements KeyboardHandler {
     private boolean gameOver;
     private boolean restart;
 
-    public static final int WIDTH = 50;
+    public static final int WIDTH = 40;
     public static final int HEIGHT = 30;
     public static final int DIMENSION = 20;
 
@@ -23,6 +30,7 @@ public class Game implements KeyboardHandler {
         graphics = new SnakeGraphics(WIDTH, HEIGHT, DIMENSION);
         gameOver = false;
         restart = false;
+        music();
 
         Keyboard keyboard = new Keyboard(this);
         registerKeys(keyboard);
@@ -83,6 +91,21 @@ public class Game implements KeyboardHandler {
         Keyboard keyboard = new Keyboard(this);
         registerKeys(keyboard);
         start();
+    }
+
+    public void music() {
+        try {
+            File music = new File("resources/The Snake Game (original GB music) - audio.wav");
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(music);
+
+            Clip clip = AudioSystem.getClip();
+
+            clip.open(audioInputStream);
+            clip.start();
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 
     private void registerKeys(Keyboard keyboard) {

@@ -7,6 +7,7 @@ public class Main {
         menu.show();
         menu.waitForEnterKey();
         if (menu.shouldStartGame()) {
+            menu.clear();
             Game game = new Game();
             game.start();
         }
