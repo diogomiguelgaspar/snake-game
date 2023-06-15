@@ -25,6 +25,10 @@ public class Game implements KeyboardHandler {
     public static final int DIMENSION = 20;
 
     public Game() {
+
+        Menu menu = new Menu();
+        menu.show();
+        menu.waitForEnterKey();
         snake = new Snake(DIMENSION);
         food = new Food(snake);
         graphics = new SnakeGraphics(WIDTH, HEIGHT, DIMENSION);
