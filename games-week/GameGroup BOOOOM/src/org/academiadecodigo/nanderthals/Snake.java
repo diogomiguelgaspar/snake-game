@@ -58,7 +58,7 @@ public class Snake {
         SnakeCell head = body.getFirst();
         int x = head.getX();
         int y = head.getY();
-        return x < 0 || x >= Game.WIDTH || y < 0 || y >= Game.HEIGHT - 1;
+        return x < 0 || x >= Game.WIDTH || y < 0 || y >= Game.HEIGHT;
     }
 
     public boolean collidesWithFood(Food food) {
