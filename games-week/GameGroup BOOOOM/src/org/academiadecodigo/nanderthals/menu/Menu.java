@@ -18,11 +18,12 @@ public class Menu implements KeyboardHandler {
     private Text text;
 
     public Menu() {
+
         shouldStartGame = false;
         keyPressed = false;
         background = new Rectangle(10, 10, Game.WIDTH * Game.DIMENSION, Game.HEIGHT * Game.DIMENSION);
         background.setColor(Color.BLACK);
-        text = new Text(25, 15, "FODASE");
+        text = new Text(350, 225, "FODA-SE");
         text.setColor(Color.WHITE);
         text.grow(100,100);
         Keyboard keyboard = new Keyboard(this);

@@ -32,7 +32,7 @@ public class Game implements KeyboardHandler {
     }
 
     public void start() {
-        graphics.createWindow(WIDTH * DIMENSION, HEIGHT * DIMENSION);
+        graphics.createWindow(WIDTH * DIMENSION - 1, HEIGHT * DIMENSION - 1);
         graphics.show();
 
         while (!gameOver) {

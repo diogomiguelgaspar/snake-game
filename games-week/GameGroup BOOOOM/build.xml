@@ -2,26 +2,26 @@
 <project name="SnakeGame" default="jarfile">
 
     <!-- Initialize build properties  -->
-    <target name="init" description="Initializes properties">
-        <property name="project.name" value="SnakeGame" />
-        <property name="src.dir" value="src" />
-        <property name="main.class" value="org.academiadecodigo.nanderthals.test.SnakeGame" />
-        <property name="build.dir" value="build" />
-        <property name="resources.dir" value="resources"/>
-        <property name="classes.dir" value="${build.dir}/classes" />
-        <property name="lib.dir" value="lib" />
-        <path id="classpath">
-            <fileset dir="${lib.dir}" includes="**/*.jar" />
-        </path>
-    </target>
+    <property name="project.name" value="SnakeGame" />
+    <property name="src.dir" value="src" />
+    <property name="main.class" value="org.academiadecodigo.nanderthals.test.SnakeGame" />
+    <property name="build.dir" value="build" />
+    <property name="resources.dir" value="resources"/>
+    <property name="classes.dir" value="${build.dir}/classes" />
+    <property name="lib.dir" value="lib" />
+
+    <!-- Set up classpath -->
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar" />
+    </path>
 
     <!-- Creates the build directories to hold JAR and Class files -->
-    <target name="prepare" description="Creates the build and classes directories" depends="init">
+    <target name="prepare" description="Creates the build and classes directories">
         <mkdir dir="${classes.dir}" />
     </target>
 
     <!-- Removes the build directory -->
-    <target name="clean" description="Clean up project" depends="init">
+    <target name="clean" description="Clean up project">
         <delete dir="${build.dir}" />
     </target>
 
@@ -41,6 +41,15 @@
             </manifest>
             <zipgroupfileset dir="${lib.dir}" includes="*.jar"/>
         </jar>
+    </target>
+
+    <target name="run" description="Runs the game" depends="jarfile">
+        <java fork="true" classname="${main.class}">
+            <classpath>
+                <path refid="classpath"/>
+                <path location="${build.dir}/${project.name}.jar"/>
+            </classpath>
+        </java>
     </target>
 
 </project>
