@@ -9,6 +9,8 @@ public class Snake {
     private LinkedList<SnakeCell> body;
     private Direction direction;
     private int dimension;
+    private int foodEaten = 0;
+    private boolean collision;
 
     public Snake(int dimension) {
         body = new LinkedList<>();
@@ -63,7 +65,14 @@ public class Snake {
 
     public boolean collidesWithFood(Food food) {
         SnakeCell head = body.getFirst();
-        return head.equals(food.getPosition());
+        collision = head.equals(food.getPosition());
+        return collision;
+    }
+    public int Score(){
+      if(collision){
+          foodEaten++;
+      }
+        return foodEaten;
     }
 
     public void grow() {
