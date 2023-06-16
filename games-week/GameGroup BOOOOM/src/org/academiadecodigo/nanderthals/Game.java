@@ -27,6 +27,8 @@ public class Game implements KeyboardHandler {
     private boolean restart;
     private HighScore highScore;
     private int factor = 5;
+    private boolean canDisplayScore;
+
 
     public static final int WIDTH = 40;
     public static final int HEIGHT = 30;
@@ -44,7 +46,7 @@ public class Game implements KeyboardHandler {
         restart = false;
         music();
         collisionImage = new Picture(10, 10, "resources/gameover.jpeg");
-        displayScores();
+        //displayScores(true);
 
         Keyboard keyboard = new Keyboard(this);
         registerKeys(keyboard);
@@ -61,8 +63,10 @@ public class Game implements KeyboardHandler {
 
             if (snake.collidesWithBody() || snake.isOutOfBounds()) {
                 gameOver = true;
+                canDisplayScore = true;
                 System.out.println("Game Over");
                 showImage(collisionImage);
+                displayScores(true);
                 break;
             }
 
@@ -93,17 +97,22 @@ public class Game implements KeyboardHandler {
         restart();
     }
 
-    public void displayScores() throws IOException {
+    public void displayScores(boolean canDisplayScore) throws IOException {
         if(gameOver){
+
+            Text text = new Text(350, 400, "Score:");
             int finalScore = calculateFinalScore(snake.getFoodEaten());
 
             highScore = new HighScore();
+            highScore.readFile();
             highScore.writeScore(finalScore);
+            System.out.println(finalScore);
 
-            String scoreGame = "Your score game is: " + finalScore + " and your highest score is: " + highScore.getHighestScore();
-            Text text = new Text(35, 22.5, scoreGame);
+            String scoreGame = "Score: " + finalScore + " \n" + " Highest score: " + highScore.getHighestScore();
+
             text.setText(scoreGame);
-            text.setColor(Color.GREEN);
+            text.setColor(Color.WHITE);
+            text.grow(20,20);
             text.draw();
 
         }
@@ -121,14 +130,17 @@ public class Game implements KeyboardHandler {
         gameOver = false;
         restart = false;
         start();*/
-        graphics.clear();
+        //graphics.clear();
 
         snake = new Snake(DIMENSION);
         food = new Food(snake);
         graphics = new SnakeGraphics(WIDTH, HEIGHT, DIMENSION);
         gameOver = false;
         restart = false;
+        canDisplayScore = true;
         collisionImage = new Picture(10, 10, "resources/gameover.jpeg");
+       // displayScores(true);
+
 
         Keyboard keyboard = new Keyboard(this);
         registerKeys(keyboard);
