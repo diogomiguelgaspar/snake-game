@@ -32,7 +32,7 @@ public class Game implements KeyboardHandler {
     public static final int HEIGHT = 30;
     public static final int DIMENSION = 20;
 
-    public Game() {
+    public Game() throws IOException {
 
         Menu menu = new Menu();
         menu.show();
@@ -44,6 +44,7 @@ public class Game implements KeyboardHandler {
         restart = false;
         music();
         collisionImage = new Picture(10, 10, "resources/gameover.jpeg");
+        displayScores();
 
         Keyboard keyboard = new Keyboard(this);
         registerKeys(keyboard);
@@ -87,6 +88,12 @@ public class Game implements KeyboardHandler {
             }
         }
 
+
+        // Reiniciar o jogo
+        restart();
+    }
+
+    public void displayScores() throws IOException {
         if(gameOver){
             int finalScore = calculateFinalScore(snake.getFoodEaten());
 
@@ -100,9 +107,6 @@ public class Game implements KeyboardHandler {
             text.draw();
 
         }
-
-        // Reiniciar o jogo
-        restart();
     }
 
     private int calculateFinalScore(int foodEaten){
