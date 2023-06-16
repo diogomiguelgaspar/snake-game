@@ -1,9 +1,12 @@
 package org.academiadecodigo.nanderthals;
 
+import org.academiadecodigo.simplegraphics.graphics.Canvas;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -17,6 +20,7 @@ public class Game implements KeyboardHandler {
     private Snake snake;
     private Food food;
     private SnakeGraphics graphics;
+    private Picture collisionImage;
     private boolean gameOver;
     private boolean restart;
 
@@ -35,9 +39,14 @@ public class Game implements KeyboardHandler {
         gameOver = false;
         restart = false;
         music();
+        collisionImage = new Picture(10, 10, "resources/gameover.jpeg");
 
         Keyboard keyboard = new Keyboard(this);
         registerKeys(keyboard);
+    }
+
+    public void showImage(Picture image) {
+        image.draw();
     }
 
     public void start() {
@@ -48,6 +57,7 @@ public class Game implements KeyboardHandler {
             if (snake.collidesWithBody() || snake.isOutOfBounds()) {
                 gameOver = true;
                 System.out.println("Game Over");
+                showImage(collisionImage);
                 break;
             }
 
@@ -91,6 +101,7 @@ public class Game implements KeyboardHandler {
         graphics = new SnakeGraphics(WIDTH, HEIGHT, DIMENSION);
         gameOver = false;
         restart = false;
+        collisionImage = new Picture(10, 10, "resources/gameover.jpeg");
 
         Keyboard keyboard = new Keyboard(this);
         registerKeys(keyboard);
