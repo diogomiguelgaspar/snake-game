@@ -1,36 +1,59 @@
 package org.academiadecodigo.nanderthals;
 
+import org.academiadecodigo.simplegraphics.graphics.Canvas;
+import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
+import org.academiadecodigo.simplegraphics.graphics.Text;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.File;
+import java.io.IOException;
 
 public class Game implements KeyboardHandler {
 
     private Snake snake;
     private Food food;
     private SnakeGraphics graphics;
+    private Picture collisionImage;
     private boolean gameOver;
     private boolean restart;
+    private HighScore highScore;
+    private int factor = 5;
 
-    public static final int WIDTH = 50;
+    public static final int WIDTH = 40;
     public static final int HEIGHT = 30;
-    public static final int DIMENSION = 15;
+    public static final int DIMENSION = 20;
 
     public Game() {
+
+        Menu menu = new Menu();
+        menu.show();
+        menu.waitForEnterKey();
         snake = new Snake(DIMENSION);
         food = new Food(snake);
         graphics = new SnakeGraphics(WIDTH, HEIGHT, DIMENSION);
         gameOver = false;
         restart = false;
+        music();
+        collisionImage = new Picture(10, 10, "resources/gameover.jpeg");
 
         Keyboard keyboard = new Keyboard(this);
         registerKeys(keyboard);
     }
 
-    public void start() {
-        graphics.createWindow(WIDTH * DIMENSION, HEIGHT * DIMENSION);
-        graphics.show();
+    public void showImage(Picture image) {
+        image.draw();
+    }
+
+    public void start() throws IOException {
 
         while (!gameOver) {
             snake.move();
@@ -38,6 +61,7 @@ public class Game implements KeyboardHandler {
             if (snake.collidesWithBody() || snake.isOutOfBounds()) {
                 gameOver = true;
                 System.out.println("Game Over");
+                showImage(collisionImage);
                 break;
             }
 
@@ -63,11 +87,30 @@ public class Game implements KeyboardHandler {
             }
         }
 
+        if(gameOver){
+            int finalScore = calculateFinalScore(snake.getFoodEaten());
+
+            highScore = new HighScore();
+            highScore.writeScore(finalScore);
+
+            String scoreGame = "Your score game is: " + finalScore + " and your highest score is: " + highScore.getHighestScore();
+            Text text = new Text(35, 22.5, scoreGame);
+            text.setText(scoreGame);
+            text.setColor(Color.GREEN);
+            text.draw();
+
+        }
+
         // Reiniciar o jogo
         restart();
     }
 
-    private void restart() {
+    private int calculateFinalScore(int foodEaten){
+        int finalScore = factor * foodEaten;
+        return finalScore;
+    }
+
+    private void restart() throws IOException {
         /*snake = new Snake(DIMENSION);
         food = new Food(snake);
         graphics.show();
@@ -81,10 +124,26 @@ public class Game implements KeyboardHandler {
         graphics = new SnakeGraphics(WIDTH, HEIGHT, DIMENSION);
         gameOver = false;
         restart = false;
+        collisionImage = new Picture(10, 10, "resources/gameover.jpeg");
 
         Keyboard keyboard = new Keyboard(this);
         registerKeys(keyboard);
         start();
+    }
+
+    public void music() {
+        try {
+            File music = new File("resources/The Snake Game (original GB music) - audio.wav");
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(music);
+
+            Clip clip = AudioSystem.getClip();
+
+            clip.open(audioInputStream);
+            clip.start();
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 
     private void registerKeys(Keyboard keyboard) {

@@ -66,14 +66,16 @@ public class Snake {
     public boolean collidesWithFood(Food food) {
         SnakeCell head = body.getFirst();
         collision = head.equals(food.getPosition());
+        if(collision){
+            foodEaten++;
+        }
         return collision;
     }
-    public int Score(){
-      if(collision){
-          foodEaten++;
-      }
+
+    public int getFoodEaten(){
         return foodEaten;
     }
+
 
     public void grow() {
         SnakeCell tail = body.getLast();
