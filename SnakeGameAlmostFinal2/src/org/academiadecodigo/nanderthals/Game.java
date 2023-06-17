@@ -101,14 +101,14 @@ public class Game implements KeyboardHandler {
     public void displayScores(boolean canDisplayScore) throws IOException {
         if(gameOver){
 
-            Text text = new Text(350, 400, "Score:");
+            Text text = new Text(270, 400, "Score:");
             int finalScore = calculateFinalScore(snake.getFoodEaten());
 
             highScore = new HighScore();
             highScore.readFile(finalScore);
             System.out.println(finalScore);
 
-            String scoreGame = "Score: " + finalScore + " \n" + " Highest score: " + highScore.getHighestScore();
+            String scoreGame = "Score: " + finalScore + " \n" + "     Highest score: " + highScore.getHighestScore() + " \n" + "     Press Enter to try again!";
 
             text.setText(scoreGame);
             text.setColor(Color.WHITE);
@@ -130,8 +130,8 @@ public class Game implements KeyboardHandler {
         gameOver = false;
         restart = false;
         start();*/
-        //graphics.clear();
 
+        graphics.clear();
         snake = new Snake(DIMENSION);
         food = new Food(snake);
         graphics = new SnakeGraphics(WIDTH, HEIGHT, DIMENSION);
