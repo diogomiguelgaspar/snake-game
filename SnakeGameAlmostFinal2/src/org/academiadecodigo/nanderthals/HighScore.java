@@ -21,7 +21,7 @@ public class HighScore {
                 }
             }
         } catch (FileNotFoundException fnfe) {
-            System.out.println("Ainda não existe ficheiro, vou criar");
+            //System.out.println("Ainda não existe ficheiro, vou criar");
         } finally {
             writeScore(score);
         }

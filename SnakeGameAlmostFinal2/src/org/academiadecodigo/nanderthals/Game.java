@@ -75,7 +75,7 @@ public class Game implements KeyboardHandler {
             if (snake.collidesWithBody() || snake.isOutOfBounds()) {
                 gameOver = true;
                 canDisplayScore = true;
-                System.out.println("Game Over");
+                //System.out.println("Game Over");
                 showImage(collisionImage);
                 displayScores(true);
                 break;
@@ -86,7 +86,7 @@ public class Game implements KeyboardHandler {
             if (snake.collidesWithFood(food)) {
                 food.respawn();
                 snake.grow();
-                System.out.println(snake.getFoodEaten());
+                //System.out.println(snake.getFoodEaten());
                 switch (snake.getFoodEaten()){
 
                     case 3:
@@ -137,7 +137,7 @@ public class Game implements KeyboardHandler {
 
             highScore = new HighScore();
             highScore.readFile(finalScore);
-            System.out.println(finalScore);
+            //System.out.println(finalScore);
 
             String scoreGame = "Score: " + finalScore + " \n" + "     Highest score: " + highScore.getHighestScore() + " \n" + "     Press Enter to try again!";
 
